@@ -1,0 +1,18 @@
+// Arquivo: thermostat.proto
+
+syntax = "proto3";
+
+package thermostat;
+
+service ThermostatService {
+  rpc SetTemperature(TemperatureRequest) returns (TemperatureResponse) {}
+  rpc UpdateDesiredTemperature(TemperatureRequest) returns (TemperatureResponse) {}
+}
+
+message TemperatureRequest {
+  float temperature = 1;
+}
+
+message TemperatureResponse {
+  bool success = 1;
+}
