@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import thermostat_pb2 as thermostat__pb2
+import smart_home_pb2 as smart__home__pb2
 
 
 class ThermostatServiceStub(object):
@@ -16,13 +16,13 @@ class ThermostatServiceStub(object):
         """
         self.SetTemperature = channel.unary_unary(
                 '/thermostat.ThermostatService/SetTemperature',
-                request_serializer=thermostat__pb2.TemperatureRequest.SerializeToString,
-                response_deserializer=thermostat__pb2.TemperatureResponse.FromString,
+                request_serializer=smart__home__pb2.TemperatureRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.TemperatureResponse.FromString,
                 )
         self.UpdateDesiredTemperature = channel.unary_unary(
                 '/thermostat.ThermostatService/UpdateDesiredTemperature',
-                request_serializer=thermostat__pb2.TemperatureRequest.SerializeToString,
-                response_deserializer=thermostat__pb2.TemperatureResponse.FromString,
+                request_serializer=smart__home__pb2.TemperatureRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.TemperatureResponse.FromString,
                 )
 
 
@@ -46,13 +46,13 @@ def add_ThermostatServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'SetTemperature': grpc.unary_unary_rpc_method_handler(
                     servicer.SetTemperature,
-                    request_deserializer=thermostat__pb2.TemperatureRequest.FromString,
-                    response_serializer=thermostat__pb2.TemperatureResponse.SerializeToString,
+                    request_deserializer=smart__home__pb2.TemperatureRequest.FromString,
+                    response_serializer=smart__home__pb2.TemperatureResponse.SerializeToString,
             ),
             'UpdateDesiredTemperature': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateDesiredTemperature,
-                    request_deserializer=thermostat__pb2.TemperatureRequest.FromString,
-                    response_serializer=thermostat__pb2.TemperatureResponse.SerializeToString,
+                    request_deserializer=smart__home__pb2.TemperatureRequest.FromString,
+                    response_serializer=smart__home__pb2.TemperatureResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -76,8 +76,8 @@ class ThermostatService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/thermostat.ThermostatService/SetTemperature',
-            thermostat__pb2.TemperatureRequest.SerializeToString,
-            thermostat__pb2.TemperatureResponse.FromString,
+            smart__home__pb2.TemperatureRequest.SerializeToString,
+            smart__home__pb2.TemperatureResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -93,7 +93,7 @@ class ThermostatService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/thermostat.ThermostatService/UpdateDesiredTemperature',
-            thermostat__pb2.TemperatureRequest.SerializeToString,
-            thermostat__pb2.TemperatureResponse.FromString,
+            smart__home__pb2.TemperatureRequest.SerializeToString,
+            smart__home__pb2.TemperatureResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
