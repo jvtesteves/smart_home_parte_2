@@ -2,7 +2,7 @@
 
 syntax = "proto3";
 
-package thermostat;
+package smart_home;
 
 service ThermostatService {
   rpc SetTemperature(TemperatureRequest) returns (TemperatureResponse) {}
@@ -15,4 +15,41 @@ message TemperatureRequest {
 
 message TemperatureResponse {
   bool success = 1;
+}
+
+// Service and messages to client interaction
+service ClientService {
+  rpc SetActuatorValues(ActuatorRequest) returns (ObjectResponse);
+  rpc GetActuatorValues(ActuatorRequest) returns (ObjectResponse);
+  rpc GetSensorValues(SensorRequest) returns (stream ObjectResponse);
+}
+
+message ActuatorRequest {
+  ActuatorType type = 1;
+  string value = 2;
+}
+
+message SensorRequest {
+  SensorType type = 1;
+}
+
+message ObjectValue {
+  string type = 1;
+  string value = 2;
+}
+
+message ObjectResponse {
+  repeated ObjectValue values = 1;
+}
+
+enum ActuatorType {
+  LAMP = 0;
+  THERMOSTAT = 1;
+  IRRIGATOR = 2;
+}
+
+enum SensorType {
+  PRESENCE = 0;
+  TEMPERATURE = 1;
+  HUMIDITY = 2;
 }

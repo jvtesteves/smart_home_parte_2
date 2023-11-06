@@ -15,12 +15,12 @@ class ThermostatServiceStub(object):
             channel: A grpc.Channel.
         """
         self.SetTemperature = channel.unary_unary(
-                '/thermostat.ThermostatService/SetTemperature',
+                '/smart_home.ThermostatService/SetTemperature',
                 request_serializer=smart__home__pb2.TemperatureRequest.SerializeToString,
                 response_deserializer=smart__home__pb2.TemperatureResponse.FromString,
                 )
         self.UpdateDesiredTemperature = channel.unary_unary(
-                '/thermostat.ThermostatService/UpdateDesiredTemperature',
+                '/smart_home.ThermostatService/UpdateDesiredTemperature',
                 request_serializer=smart__home__pb2.TemperatureRequest.SerializeToString,
                 response_deserializer=smart__home__pb2.TemperatureResponse.FromString,
                 )
@@ -56,7 +56,7 @@ def add_ThermostatServiceServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'thermostat.ThermostatService', rpc_method_handlers)
+            'smart_home.ThermostatService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -75,7 +75,7 @@ class ThermostatService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/thermostat.ThermostatService/SetTemperature',
+        return grpc.experimental.unary_unary(request, target, '/smart_home.ThermostatService/SetTemperature',
             smart__home__pb2.TemperatureRequest.SerializeToString,
             smart__home__pb2.TemperatureResponse.FromString,
             options, channel_credentials,
@@ -92,8 +92,138 @@ class ThermostatService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/thermostat.ThermostatService/UpdateDesiredTemperature',
+        return grpc.experimental.unary_unary(request, target, '/smart_home.ThermostatService/UpdateDesiredTemperature',
             smart__home__pb2.TemperatureRequest.SerializeToString,
             smart__home__pb2.TemperatureResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class ClientServiceStub(object):
+    """Service and messages to client interaction
+    """
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.SetActuatorValues = channel.unary_unary(
+                '/smart_home.ClientService/SetActuatorValues',
+                request_serializer=smart__home__pb2.ActuatorRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.ObjectResponse.FromString,
+                )
+        self.GetActuatorValues = channel.unary_unary(
+                '/smart_home.ClientService/GetActuatorValues',
+                request_serializer=smart__home__pb2.ActuatorRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.ObjectResponse.FromString,
+                )
+        self.GetSensorValues = channel.unary_stream(
+                '/smart_home.ClientService/GetSensorValues',
+                request_serializer=smart__home__pb2.SensorRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.ObjectResponse.FromString,
+                )
+
+
+class ClientServiceServicer(object):
+    """Service and messages to client interaction
+    """
+
+    def SetActuatorValues(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetActuatorValues(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetSensorValues(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_ClientServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'SetActuatorValues': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetActuatorValues,
+                    request_deserializer=smart__home__pb2.ActuatorRequest.FromString,
+                    response_serializer=smart__home__pb2.ObjectResponse.SerializeToString,
+            ),
+            'GetActuatorValues': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetActuatorValues,
+                    request_deserializer=smart__home__pb2.ActuatorRequest.FromString,
+                    response_serializer=smart__home__pb2.ObjectResponse.SerializeToString,
+            ),
+            'GetSensorValues': grpc.unary_stream_rpc_method_handler(
+                    servicer.GetSensorValues,
+                    request_deserializer=smart__home__pb2.SensorRequest.FromString,
+                    response_serializer=smart__home__pb2.ObjectResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'smart_home.ClientService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class ClientService(object):
+    """Service and messages to client interaction
+    """
+
+    @staticmethod
+    def SetActuatorValues(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.ClientService/SetActuatorValues',
+            smart__home__pb2.ActuatorRequest.SerializeToString,
+            smart__home__pb2.ObjectResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetActuatorValues(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.ClientService/GetActuatorValues',
+            smart__home__pb2.ActuatorRequest.SerializeToString,
+            smart__home__pb2.ObjectResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetSensorValues(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/smart_home.ClientService/GetSensorValues',
+            smart__home__pb2.SensorRequest.SerializeToString,
+            smart__home__pb2.ObjectResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
