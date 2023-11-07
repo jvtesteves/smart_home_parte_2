@@ -1,8 +1,8 @@
 import pika
 import json
 import grpc
-import thermostat_pb2
-import thermostat_pb2_grpc
+import smart_home_pb2
+import smart_home_pb2_grpc
 
 # Configurações do RabbitMQ
 rabbitmq_host = 'localhost'
@@ -21,9 +21,9 @@ user_set_temperature = 27.0
 # Função para chamar o serviço gRPC do termostato
 def set_temperature(current_temperature):
     with grpc.insecure_channel('localhost:50051') as channel:
-        stub = thermostat_pb2_grpc.ThermostatServiceStub(channel)
+        stub = smart_home_pb2_grpc.ThermostatServiceStub(channel)
         # Aqui o Home Assistant envia a temperatura atual do sensor para o termostato
-        response = stub.SetTemperature(thermostat_pb2.TemperatureRequest(temperature=current_temperature))
+        response = stub.SetTemperature(smart_home_pb2.TemperatureRequest(temperature=current_temperature))
         print(f"Thermostat response: {response.success}")
 
 # Função de callback para quando uma mensagem é recebida da fila do RabbitMQ
