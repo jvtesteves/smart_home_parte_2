@@ -3,6 +3,7 @@ import grpc
 import smart_home_pb2
 import smart_home_pb2_grpc
 import time
+import random
 
 # Variável global para manter a temperatura desejada
 desired_temperature = 27.0  # Exemplo inicial
@@ -35,7 +36,7 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
 
         if actuator_type == smart_home_pb2.LAMP:
             print("Setting lamp value:", value)
-            response.append(smart_home_pb2.ObjectValue(type="status", value="ON"))
+            response.append(smart_home_pb2.ObjectValue(type="status", value=value))
             # Lógica para mudar valor da lâmpada
         elif actuator_type == smart_home_pb2.THERMOSTAT:
             print("Setting thermostat value:", value)
@@ -43,7 +44,7 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
             # Lógica para mudar valor do termostato
         elif actuator_type == smart_home_pb2.IRRIGATOR:
             print("Setting irrigator value:", value)
-            response.append(smart_home_pb2.ObjectValue(type="status", value="OFF"))
+            response.append(smart_home_pb2.ObjectValue(type="status", value=value))
             # Lógica para mudar valor da irrigador
         else:
             response.append(smart_home_pb2.ObjectValue(type="error", value="Objeto não existe"))
@@ -55,11 +56,18 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
         response = []
 
         if actuator_type == smart_home_pb2.LAMP:
-            response.append(smart_home_pb2.ObjectValue(type="status", value="ON"))
+            random_value = random.randint(0, 1)
+            value = "ON"
+            if random_value == 0: value = "OFF"
+            response.append(smart_home_pb2.ObjectValue(type="status", value=value))
         elif actuator_type == smart_home_pb2.THERMOSTAT:
-            response.append(smart_home_pb2.ObjectValue(type="temperature", value="25"))
+            random_value = random.randrange(10, 30)
+            response.append(smart_home_pb2.ObjectValue(type="temperature", value=f"{random_value}"))
         elif actuator_type == smart_home_pb2.IRRIGATOR:
-            response.append(smart_home_pb2.ObjectValue(type="status",  value="OFF"))
+            random_value = random.randint(0, 1)
+            value = "ON"
+            if random_value == 0: value = "OFF"
+            response.append(smart_home_pb2.ObjectValue(type="status",  value=value))
         else:
             response.append(smart_home_pb2.ObjectValue(type="error", value="Objeto não existe"))
         
@@ -72,41 +80,40 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
             while context.is_active():
                 response = []
                 # Simulação contínua de leituras de presença
-                value = str(int(time.time()) % 2)  # Simulação de valores (0 ou 1)
-                if value == 0: value = "ON"
-                else: value = "OFF"
+                random_value = random.randint(0, 1)
+                value = "ON"
+                if random_value == 0: value = "OFF"
                 
                 response.append(smart_home_pb2.ObjectValue(type="status", value=value))
                 yield smart_home_pb2.ObjectResponse(values=response)
-                time.sleep(10)
+                time.sleep(5)
 
         elif sensor_type == smart_home_pb2.TEMPERATURE:
             while context.is_active():
                 response = []
                 # Simulação contínua de leituras de temperatura
-                value = str(20 + int(time.time()))  # Simulação de valores variáveis
+                value = str(random.randrange(10, 30))  # Simulação de valores variáveis
                 value = f"{value}"
                 
                 response.append(smart_home_pb2.ObjectValue(type="temperature", value=value))
                 yield smart_home_pb2.ObjectResponse(values=response)
-                time.sleep(10)
+                time.sleep(5)
 
         elif sensor_type == smart_home_pb2.HUMIDITY:
             while context.is_active():
                 response = []
                 # Simulação contínua de leituras de umidade
-                value = str(50 + int(time.time()))  # Simulação de valores variáveis
+                value = str(random.randrange(10, 30))  # Simulação de valores variáveis
                 value = f"{value}"
                 
                 response.append(smart_home_pb2.ObjectValue(type="humity", value=value))
                 yield smart_home_pb2.ObjectResponse(values=response)
-                time.sleep(10)
+                time.sleep(5)
         else:
             response = []
             response.append(smart_home_pb2.ObjectValue(type="error", value="Object does not exist"))
             context.abort(grpc.StatusCode.NOT_FOUND, "Sensor not recognized", smart_home_pb2.ObjectResponse(values=response))
             
-
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     smart_home_pb2_grpc.add_ThermostatServiceServicer_to_server(ThermostatService(), server)
