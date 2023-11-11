@@ -18,7 +18,7 @@ channel.queue_declare(queue=queue_name)
 def publish_sensor_data():
     while True:
         # Simula a leitura do sensor de temperatura
-        temperature = round(uniform(18.0, 26.0), 2)
+        temperature = round(uniform(18.0, 26.0), 0)
         message = json.dumps({'sensor_type': 'temperature', 'value': temperature})
 
         # Publica a mensagem na fila
@@ -26,7 +26,7 @@ def publish_sensor_data():
                               routing_key=queue_name,
                               body=message)
         print(f"[x] Sent {message}")
-        time.sleep(15)  # Intervalo entre as publicações
+        time.sleep(20)  # Intervalo entre as publicações
 
 
 publish_sensor_data()
