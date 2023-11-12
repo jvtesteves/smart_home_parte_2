@@ -151,6 +151,7 @@ def serve():
     smart_home_pb2_grpc.add_ThermostatServiceServicer_to_server(ThermostatService(), server)
     smart_home_pb2_grpc.add_ClientServiceServicer_to_server(ClientService(), server)
     smart_home_pb2_grpc.add_LampServiceServicer_to_server(LampService(), server)
+    smart_home_pb2_grpc.add_IrrigatorServiceServicer_to_server(IrrigatorService(), server)
     server.add_insecure_port('[::]:50051')
     server.start()
     print("Smart Home Server running...")
