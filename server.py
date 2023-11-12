@@ -7,6 +7,14 @@ import random
 
 # Variável global para manter a temperatura desejada
 desired_temperature = 27.0  # Exemplo inicial
+lamp_state = False
+
+class LampService(smart_home_pb2_grpc.LampServiceServicer):
+    def SetState(self, request, context):
+        global lamp_state
+        lamp_state = request.state
+        print(f"The value of the lamp is set to {lamp_state}")
+        return smart_home_pb2.LampResponse(success=True)
 
 class ThermostatService(smart_home_pb2_grpc.ThermostatServiceServicer):
 
@@ -118,6 +126,7 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     smart_home_pb2_grpc.add_ThermostatServiceServicer_to_server(ThermostatService(), server)
     smart_home_pb2_grpc.add_ClientServiceServicer_to_server(ClientService(), server)
+    smart_home_pb2_grpc.add_LampServiceServicer_to_server(LampService(), server)
     server.add_insecure_port('[::]:50051')
     server.start()
     print("Smart Home Server running...")

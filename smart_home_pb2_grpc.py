@@ -5,6 +5,67 @@ import grpc
 import smart_home_pb2 as smart__home__pb2
 
 
+class LampServiceStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.SetState = channel.unary_unary(
+                '/smart_home.LampService/SetState',
+                request_serializer=smart__home__pb2.LampRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.LampResponse.FromString,
+                )
+
+
+class LampServiceServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def SetState(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_LampServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'SetState': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetState,
+                    request_deserializer=smart__home__pb2.LampRequest.FromString,
+                    response_serializer=smart__home__pb2.LampResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'smart_home.LampService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class LampService(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def SetState(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.LampService/SetState',
+            smart__home__pb2.LampRequest.SerializeToString,
+            smart__home__pb2.LampResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
 class ThermostatServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
