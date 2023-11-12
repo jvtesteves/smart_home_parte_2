@@ -20,7 +20,7 @@ user_set_temperature = 27.0
 
 # Função para chamar o serviço gRPC do termostato
 def set_temperature(current_temperature):
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50052') as channel:
         stub = smart_home_pb2_grpc.ThermostatServiceStub(channel)
         # Aqui o Home Assistant envia a temperatura atual do sensor para o termostato
         response = stub.SetTemperature(smart_home_pb2.TemperatureRequest(temperature=current_temperature))
@@ -28,28 +28,28 @@ def set_temperature(current_temperature):
 
 # Função para atualizar a temperatura desejada no termostato
 def update_desired_temperature(desired_temp):
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50052') as channel:
         stub = smart_home_pb2_grpc.ThermostatServiceStub(channel)
         response = stub.UpdateDesiredTemperature(smart_home_pb2.TemperatureRequest(temperature=desired_temp))
         print(f"Updated desired temperature to {desired_temp}°C: {response.success}")
 
 
 def set_humidity(current_humidity):
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50054') as channel:
         stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
         # Aqui o Home Assistant envia a temperatura atual do sensor para o termostato
         response = stub.SetHumidity(smart_home_pb2.HumidityRequest(humidity=current_humidity))
         print(f"Irrigator response: {response.success}")
 
 def update_desired_humidity(desired_humidity):
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50054') as channel:
         stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
         response = stub.UpdateDesiredHumidity(smart_home_pb2.HumidityRequest(humidity=desired_humidity))
         print(f"Updated desired temperature to {desired_humidity}°C: {response.success}")
 
 
 def set_presence(presence):
-    with grpc.insecure_channel('localhost:50051') as channel:
+    with grpc.insecure_channel('localhost:50053') as channel:
         stub = smart_home_pb2_grpc.LampServiceStub(channel)
         state = True if presence == 1 else False
         response = stub.SetState(smart_home_pb2.LampRequest(state=state))
