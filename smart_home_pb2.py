@@ -13,17 +13,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10smart_home.proto\x12\nsmart_home\"\x1c\n\x0bLampRequest\x12\r\n\x05state\x18\x01 \x01(\x08\"\x1f\n\x0cLampResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\")\n\x12TemperatureRequest\x12\x13\n\x0btemperature\x18\x01 \x01(\x02\"&\n\x13TemperatureResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"H\n\x0f\x41\x63tuatorRequest\x12&\n\x04type\x18\x01 \x01(\x0e\x32\x18.smart_home.ActuatorType\x12\r\n\x05value\x18\x02 \x01(\t\"5\n\rSensorRequest\x12$\n\x04type\x18\x01 \x01(\x0e\x32\x16.smart_home.SensorType\"*\n\x0bObjectValue\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"9\n\x0eObjectResponse\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.smart_home.ObjectValue*7\n\x0c\x41\x63tuatorType\x12\x08\n\x04LAMP\x10\x00\x12\x0e\n\nTHERMOSTAT\x10\x01\x12\r\n\tIRRIGATOR\x10\x02*9\n\nSensorType\x12\x0c\n\x08PRESENCE\x10\x00\x12\x0f\n\x0bTEMPERATURE\x10\x01\x12\x0c\n\x08HUMIDITY\x10\x02\x32N\n\x0bLampService\x12?\n\x08SetState\x12\x17.smart_home.LampRequest\x1a\x18.smart_home.LampResponse\"\x00\x32\xc7\x01\n\x11ThermostatService\x12S\n\x0eSetTemperature\x12\x1e.smart_home.TemperatureRequest\x1a\x1f.smart_home.TemperatureResponse\"\x00\x12]\n\x18UpdateDesiredTemperature\x12\x1e.smart_home.TemperatureRequest\x1a\x1f.smart_home.TemperatureResponse\"\x00\x32\xf7\x01\n\rClientService\x12L\n\x11SetActuatorValues\x12\x1b.smart_home.ActuatorRequest\x1a\x1a.smart_home.ObjectResponse\x12L\n\x11GetActuatorValues\x12\x1b.smart_home.ActuatorRequest\x1a\x1a.smart_home.ObjectResponse\x12J\n\x0fGetSensorValues\x12\x19.smart_home.SensorRequest\x1a\x1a.smart_home.ObjectResponse0\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10smart_home.proto\x12\nsmart_home\"\x1c\n\x0bLampRequest\x12\r\n\x05state\x18\x01 \x01(\x08\"\x1f\n\x0cLampResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\")\n\x12TemperatureRequest\x12\x13\n\x0btemperature\x18\x01 \x01(\x02\"&\n\x13TemperatureResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"H\n\x0f\x41\x63tuatorRequest\x12&\n\x04type\x18\x01 \x01(\x0e\x32\x18.smart_home.ActuatorType\x12\r\n\x05value\x18\x02 \x01(\t\"5\n\rSensorRequest\x12$\n\x04type\x18\x01 \x01(\x0e\x32\x16.smart_home.SensorType\"*\n\x0bObjectValue\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"9\n\x0eObjectResponse\x12\'\n\x06values\x18\x01 \x03(\x0b\x32\x17.smart_home.ObjectValue\"#\n\x0fHumidityRequest\x12\x10\n\x08humidity\x18\x01 \x01(\x02\"#\n\x10HumidityResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08*7\n\x0c\x41\x63tuatorType\x12\x08\n\x04LAMP\x10\x00\x12\x0e\n\nTHERMOSTAT\x10\x01\x12\r\n\tIRRIGATOR\x10\x02*9\n\nSensorType\x12\x0c\n\x08PRESENCE\x10\x00\x12\x0f\n\x0bTEMPERATURE\x10\x01\x12\x0c\n\x08HUMIDITY\x10\x02\x32N\n\x0bLampService\x12?\n\x08SetState\x12\x17.smart_home.LampRequest\x1a\x18.smart_home.LampResponse\"\x00\x32\xc7\x01\n\x11ThermostatService\x12S\n\x0eSetTemperature\x12\x1e.smart_home.TemperatureRequest\x1a\x1f.smart_home.TemperatureResponse\"\x00\x12]\n\x18UpdateDesiredTemperature\x12\x1e.smart_home.TemperatureRequest\x1a\x1f.smart_home.TemperatureResponse\"\x00\x32\xf7\x01\n\rClientService\x12L\n\x11SetActuatorValues\x12\x1b.smart_home.ActuatorRequest\x1a\x1a.smart_home.ObjectResponse\x12L\n\x11GetActuatorValues\x12\x1b.smart_home.ActuatorRequest\x1a\x1a.smart_home.ObjectResponse\x12J\n\x0fGetSensorValues\x12\x19.smart_home.SensorRequest\x1a\x1a.smart_home.ObjectResponse0\x01\x32\xb4\x01\n\x10IrrigatorService\x12J\n\x0bSetHumidity\x12\x1b.smart_home.HumidityRequest\x1a\x1c.smart_home.HumidityResponse\"\x00\x12T\n\x15UpdateDesiredHumidity\x12\x1b.smart_home.HumidityRequest\x1a\x1c.smart_home.HumidityResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'smart_home_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
-  _globals['_ACTUATORTYPE']._serialized_start=410
-  _globals['_ACTUATORTYPE']._serialized_end=465
-  _globals['_SENSORTYPE']._serialized_start=467
-  _globals['_SENSORTYPE']._serialized_end=524
+  _globals['_ACTUATORTYPE']._serialized_start=484
+  _globals['_ACTUATORTYPE']._serialized_end=539
+  _globals['_SENSORTYPE']._serialized_start=541
+  _globals['_SENSORTYPE']._serialized_end=598
   _globals['_LAMPREQUEST']._serialized_start=32
   _globals['_LAMPREQUEST']._serialized_end=60
   _globals['_LAMPRESPONSE']._serialized_start=62
@@ -40,10 +40,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_OBJECTVALUE']._serialized_end=349
   _globals['_OBJECTRESPONSE']._serialized_start=351
   _globals['_OBJECTRESPONSE']._serialized_end=408
-  _globals['_LAMPSERVICE']._serialized_start=526
-  _globals['_LAMPSERVICE']._serialized_end=604
-  _globals['_THERMOSTATSERVICE']._serialized_start=607
-  _globals['_THERMOSTATSERVICE']._serialized_end=806
-  _globals['_CLIENTSERVICE']._serialized_start=809
-  _globals['_CLIENTSERVICE']._serialized_end=1056
+  _globals['_HUMIDITYREQUEST']._serialized_start=410
+  _globals['_HUMIDITYREQUEST']._serialized_end=445
+  _globals['_HUMIDITYRESPONSE']._serialized_start=447
+  _globals['_HUMIDITYRESPONSE']._serialized_end=482
+  _globals['_LAMPSERVICE']._serialized_start=600
+  _globals['_LAMPSERVICE']._serialized_end=678
+  _globals['_THERMOSTATSERVICE']._serialized_start=681
+  _globals['_THERMOSTATSERVICE']._serialized_end=880
+  _globals['_CLIENTSERVICE']._serialized_start=883
+  _globals['_CLIENTSERVICE']._serialized_end=1130
+  _globals['_IRRIGATORSERVICE']._serialized_start=1133
+  _globals['_IRRIGATORSERVICE']._serialized_end=1313
 # @@protoc_insertion_point(module_scope)

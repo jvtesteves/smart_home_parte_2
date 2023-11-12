@@ -75,3 +75,15 @@ class ObjectResponse(_message.Message):
     VALUES_FIELD_NUMBER: _ClassVar[int]
     values: _containers.RepeatedCompositeFieldContainer[ObjectValue]
     def __init__(self, values: _Optional[_Iterable[_Union[ObjectValue, _Mapping]]] = ...) -> None: ...
+
+class HumidityRequest(_message.Message):
+    __slots__ = ["humidity"]
+    HUMIDITY_FIELD_NUMBER: _ClassVar[int]
+    humidity: float
+    def __init__(self, humidity: _Optional[float] = ...) -> None: ...
+
+class HumidityResponse(_message.Message):
+    __slots__ = ["success"]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    def __init__(self, success: bool = ...) -> None: ...

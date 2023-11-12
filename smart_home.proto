@@ -65,3 +65,16 @@ enum SensorType {
   TEMPERATURE = 1;
   HUMIDITY = 2;
 }
+
+service IrrigatorService {
+  rpc SetHumidity(HumidityRequest) returns (HumidityResponse) {}
+  rpc UpdateDesiredHumidity(HumidityRequest) returns (HumidityResponse) {}
+}
+
+message HumidityRequest {
+  float humidity = 1;
+}
+
+message HumidityResponse {
+  bool success = 1;
+}

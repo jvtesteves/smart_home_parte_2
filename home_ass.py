@@ -34,6 +34,20 @@ def update_desired_temperature(desired_temp):
         print(f"Updated desired temperature to {desired_temp}°C: {response.success}")
 
 
+def set_humidity(current_humidity):
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
+        # Aqui o Home Assistant envia a temperatura atual do sensor para o termostato
+        response = stub.SetHumidity(smart_home_pb2.HumidityRequest(humidity=current_humidity))
+        print(f"Irrigator response: {response.success}")
+
+def update_desired_humidity(desired_humidity):
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
+        response = stub.UpdateDesiredHumidity(smart_home_pb2.HumidityRequest(humidity=desired_humidity))
+        print(f"Updated desired temperature to {desired_humidity}°C: {response.success}")
+
+
 def set_presence(presence):
     with grpc.insecure_channel('localhost:50051') as channel:
         stub = smart_home_pb2_grpc.LampServiceStub(channel)
@@ -51,6 +65,8 @@ def callback(ch, method, properties, body):
         set_temperature(message['value'])
     elif message['sensor_type'] == 'presence':
         set_presence(message['value'])
+    elif message['sensor_type'] == 'humidity':
+        set_humidity(message['value'])
 
 # Configurar a função de callback no canal do RabbitMQ
 channel.basic_consume(queue=queue_name,

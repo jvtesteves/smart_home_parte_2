@@ -288,3 +288,97 @@ class ClientService(object):
             smart__home__pb2.ObjectResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class IrrigatorServiceStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.SetHumidity = channel.unary_unary(
+                '/smart_home.IrrigatorService/SetHumidity',
+                request_serializer=smart__home__pb2.HumidityRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.HumidityResponse.FromString,
+                )
+        self.UpdateDesiredHumidity = channel.unary_unary(
+                '/smart_home.IrrigatorService/UpdateDesiredHumidity',
+                request_serializer=smart__home__pb2.HumidityRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.HumidityResponse.FromString,
+                )
+
+
+class IrrigatorServiceServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def SetHumidity(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateDesiredHumidity(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_IrrigatorServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'SetHumidity': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetHumidity,
+                    request_deserializer=smart__home__pb2.HumidityRequest.FromString,
+                    response_serializer=smart__home__pb2.HumidityResponse.SerializeToString,
+            ),
+            'UpdateDesiredHumidity': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateDesiredHumidity,
+                    request_deserializer=smart__home__pb2.HumidityRequest.FromString,
+                    response_serializer=smart__home__pb2.HumidityResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'smart_home.IrrigatorService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class IrrigatorService(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def SetHumidity(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/SetHumidity',
+            smart__home__pb2.HumidityRequest.SerializeToString,
+            smart__home__pb2.HumidityResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateDesiredHumidity(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/UpdateDesiredHumidity',
+            smart__home__pb2.HumidityRequest.SerializeToString,
+            smart__home__pb2.HumidityResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

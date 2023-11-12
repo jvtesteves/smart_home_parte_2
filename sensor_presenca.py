@@ -36,7 +36,7 @@ def publish_sensor_presence():
 
 
         last = presence
-        time.sleep(1)  # Intervalo entre as publicações
+        time.sleep(5)  # Intervalo entre as publicações
 
 publish_sensor_presence()
 
