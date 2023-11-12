@@ -4,8 +4,11 @@ syntax = "proto3";
 
 package smart_home;
 
+message Empty{}
+
 service LampService {
   rpc SetState(LampRequest) returns (LampResponse) {} 
+  rpc GetState(Empty) returns (LampResponse) {}
 }
 
 message LampRequest {
@@ -19,6 +22,7 @@ message LampResponse {
 service ThermostatService {
   rpc SetTemperature(TemperatureRequest) returns (TemperatureResponse) {}
   rpc UpdateDesiredTemperature(TemperatureRequest) returns (TemperatureResponse) {}
+  rpc GetTemperature(Empty) returns (TemperatureResponse) {}
 }
 
 message TemperatureRequest {
@@ -67,14 +71,14 @@ enum SensorType {
 }
 
 service IrrigatorService {
-  rpc SetHumidity(HumidityRequest) returns (HumidityResponse) {}
-  rpc UpdateDesiredHumidity(HumidityRequest) returns (HumidityResponse) {}
+  rpc SetStateIrrigator(IrrigatorRequest) returns (IrrigatorResponse) {}
+  rpc GetStateIrrigator(Empty) returns (IrrigatorResponse) {}
 }
 
-message HumidityRequest {
-  float humidity = 1;
+message IrrigatorRequest {
+  bool state = 1;
 }
 
-message HumidityResponse {
+message IrrigatorResponse {
   bool success = 1;
 }

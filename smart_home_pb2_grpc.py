@@ -19,6 +19,11 @@ class LampServiceStub(object):
                 request_serializer=smart__home__pb2.LampRequest.SerializeToString,
                 response_deserializer=smart__home__pb2.LampResponse.FromString,
                 )
+        self.GetState = channel.unary_unary(
+                '/smart_home.LampService/GetState',
+                request_serializer=smart__home__pb2.Empty.SerializeToString,
+                response_deserializer=smart__home__pb2.LampResponse.FromString,
+                )
 
 
 class LampServiceServicer(object):
@@ -30,12 +35,23 @@ class LampServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetState(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_LampServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'SetState': grpc.unary_unary_rpc_method_handler(
                     servicer.SetState,
                     request_deserializer=smart__home__pb2.LampRequest.FromString,
+                    response_serializer=smart__home__pb2.LampResponse.SerializeToString,
+            ),
+            'GetState': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetState,
+                    request_deserializer=smart__home__pb2.Empty.FromString,
                     response_serializer=smart__home__pb2.LampResponse.SerializeToString,
             ),
     }
@@ -65,6 +81,23 @@ class LampService(object):
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
+    @staticmethod
+    def GetState(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.LampService/GetState',
+            smart__home__pb2.Empty.SerializeToString,
+            smart__home__pb2.LampResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
 
 class ThermostatServiceStub(object):
     """Missing associated documentation comment in .proto file."""
@@ -85,6 +118,11 @@ class ThermostatServiceStub(object):
                 request_serializer=smart__home__pb2.TemperatureRequest.SerializeToString,
                 response_deserializer=smart__home__pb2.TemperatureResponse.FromString,
                 )
+        self.GetTemperature = channel.unary_unary(
+                '/smart_home.ThermostatService/GetTemperature',
+                request_serializer=smart__home__pb2.Empty.SerializeToString,
+                response_deserializer=smart__home__pb2.TemperatureResponse.FromString,
+                )
 
 
 class ThermostatServiceServicer(object):
@@ -102,6 +140,12 @@ class ThermostatServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetTemperature(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ThermostatServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -113,6 +157,11 @@ def add_ThermostatServiceServicer_to_server(servicer, server):
             'UpdateDesiredTemperature': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateDesiredTemperature,
                     request_deserializer=smart__home__pb2.TemperatureRequest.FromString,
+                    response_serializer=smart__home__pb2.TemperatureResponse.SerializeToString,
+            ),
+            'GetTemperature': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetTemperature,
+                    request_deserializer=smart__home__pb2.Empty.FromString,
                     response_serializer=smart__home__pb2.TemperatureResponse.SerializeToString,
             ),
     }
@@ -155,6 +204,23 @@ class ThermostatService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/smart_home.ThermostatService/UpdateDesiredTemperature',
             smart__home__pb2.TemperatureRequest.SerializeToString,
+            smart__home__pb2.TemperatureResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetTemperature(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.ThermostatService/GetTemperature',
+            smart__home__pb2.Empty.SerializeToString,
             smart__home__pb2.TemperatureResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -299,28 +365,28 @@ class IrrigatorServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.SetHumidity = channel.unary_unary(
-                '/smart_home.IrrigatorService/SetHumidity',
-                request_serializer=smart__home__pb2.HumidityRequest.SerializeToString,
-                response_deserializer=smart__home__pb2.HumidityResponse.FromString,
+        self.SetStateIrrigator = channel.unary_unary(
+                '/smart_home.IrrigatorService/SetStateIrrigator',
+                request_serializer=smart__home__pb2.IrrigatorRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.IrrigatorResponse.FromString,
                 )
-        self.UpdateDesiredHumidity = channel.unary_unary(
-                '/smart_home.IrrigatorService/UpdateDesiredHumidity',
-                request_serializer=smart__home__pb2.HumidityRequest.SerializeToString,
-                response_deserializer=smart__home__pb2.HumidityResponse.FromString,
+        self.GetStateIrrigator = channel.unary_unary(
+                '/smart_home.IrrigatorService/GetStateIrrigator',
+                request_serializer=smart__home__pb2.Empty.SerializeToString,
+                response_deserializer=smart__home__pb2.IrrigatorResponse.FromString,
                 )
 
 
 class IrrigatorServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def SetHumidity(self, request, context):
+    def SetStateIrrigator(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def UpdateDesiredHumidity(self, request, context):
+    def GetStateIrrigator(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -329,15 +395,15 @@ class IrrigatorServiceServicer(object):
 
 def add_IrrigatorServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'SetHumidity': grpc.unary_unary_rpc_method_handler(
-                    servicer.SetHumidity,
-                    request_deserializer=smart__home__pb2.HumidityRequest.FromString,
-                    response_serializer=smart__home__pb2.HumidityResponse.SerializeToString,
+            'SetStateIrrigator': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetStateIrrigator,
+                    request_deserializer=smart__home__pb2.IrrigatorRequest.FromString,
+                    response_serializer=smart__home__pb2.IrrigatorResponse.SerializeToString,
             ),
-            'UpdateDesiredHumidity': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdateDesiredHumidity,
-                    request_deserializer=smart__home__pb2.HumidityRequest.FromString,
-                    response_serializer=smart__home__pb2.HumidityResponse.SerializeToString,
+            'GetStateIrrigator': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetStateIrrigator,
+                    request_deserializer=smart__home__pb2.Empty.FromString,
+                    response_serializer=smart__home__pb2.IrrigatorResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -350,7 +416,7 @@ class IrrigatorService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def SetHumidity(request,
+    def SetStateIrrigator(request,
             target,
             options=(),
             channel_credentials=None,
@@ -360,14 +426,14 @@ class IrrigatorService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/SetHumidity',
-            smart__home__pb2.HumidityRequest.SerializeToString,
-            smart__home__pb2.HumidityResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/SetStateIrrigator',
+            smart__home__pb2.IrrigatorRequest.SerializeToString,
+            smart__home__pb2.IrrigatorResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def UpdateDesiredHumidity(request,
+    def GetStateIrrigator(request,
             target,
             options=(),
             channel_credentials=None,
@@ -377,8 +443,8 @@ class IrrigatorService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/UpdateDesiredHumidity',
-            smart__home__pb2.HumidityRequest.SerializeToString,
-            smart__home__pb2.HumidityResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/GetStateIrrigator',
+            smart__home__pb2.Empty.SerializeToString,
+            smart__home__pb2.IrrigatorResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
