@@ -24,6 +24,18 @@ PRESENCE: SensorType
 TEMPERATURE: SensorType
 HUMIDITY: SensorType
 
+class LampRequest(_message.Message):
+    __slots__ = ["state"]
+    STATE_FIELD_NUMBER: _ClassVar[int]
+    state: bool
+    def __init__(self, state: bool = ...) -> None: ...
+
+class LampResponse(_message.Message):
+    __slots__ = ["success"]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    def __init__(self, success: bool = ...) -> None: ...
+
 class TemperatureRequest(_message.Message):
     __slots__ = ["temperature"]
     TEMPERATURE_FIELD_NUMBER: _ClassVar[int]

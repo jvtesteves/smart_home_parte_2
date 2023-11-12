@@ -4,6 +4,18 @@ syntax = "proto3";
 
 package smart_home;
 
+service LampService {
+  rpc SetState(LampRequest) returns (LampResponse) {} 
+}
+
+message LampRequest {
+  bool state = 1;
+}
+
+message LampResponse {
+  bool success = 1;
+}
+
 service ThermostatService {
   rpc SetTemperature(TemperatureRequest) returns (TemperatureResponse) {}
   rpc UpdateDesiredTemperature(TemperatureRequest) returns (TemperatureResponse) {}

@@ -34,6 +34,14 @@ def update_desired_temperature(desired_temp):
         print(f"Updated desired temperature to {desired_temp}°C: {response.success}")
 
 
+def set_presence(presence):
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = smart_home_pb2_grpc.LampServiceStub(channel)
+        state = True if presence == 1 else False
+        response = stub.SetState(smart_home_pb2.LampRequest(state=state))
+        print(f"Updated lamp state to {state}: {response.success}")
+
+
 # Função de callback para quando uma mensagem é recebida da fila do RabbitMQ
 def callback(ch, method, properties, body):
     message = json.loads(body)
@@ -41,6 +49,8 @@ def callback(ch, method, properties, body):
     if message['sensor_type'] == 'temperature':
         # Ajusta a temperatura do termostato com base na leitura do sensor
         set_temperature(message['value'])
+    elif message['sensor_type'] == 'presence':
+        set_presence(message['value'])
 
 # Configurar a função de callback no canal do RabbitMQ
 channel.basic_consume(queue=queue_name,
