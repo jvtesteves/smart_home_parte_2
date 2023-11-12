@@ -37,7 +37,6 @@ class ThermostatService(smart_home_pb2_grpc.ThermostatServiceServicer):
             print(f"Current temperature is {current_temperature}°C, no adjustment needed.")
         return smart_home_pb2.TemperatureResponse(success=True)
 
-
 class IrrigatorService(smart_home_pb2_grpc.IrrigatorServiceServicer):
 
     def UpdateDesiredHumidity(self, request, context):
@@ -58,7 +57,6 @@ class IrrigatorService(smart_home_pb2_grpc.IrrigatorServiceServicer):
         else:
             print(f"Current humidity is {current_humidity}%, no adjustment needed.")
         return smart_home_pb2.HumidityResponse(success=True)
-
 
 class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
     def SetActuatorValues(self, request, context):

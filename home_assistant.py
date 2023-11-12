@@ -33,7 +33,6 @@ def update_desired_temperature(desired_temp):
         response = stub.UpdateDesiredTemperature(smart_home_pb2.TemperatureRequest(temperature=desired_temp))
         print(f"Updated desired temperature to {desired_temp}°C: {response.success}")
 
-
 def set_humidity(current_humidity):
     with grpc.insecure_channel('localhost:50051') as channel:
         stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
@@ -46,7 +45,6 @@ def update_desired_humidity(desired_humidity):
         stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
         response = stub.UpdateDesiredHumidity(smart_home_pb2.HumidityRequest(humidity=desired_humidity))
         print(f"Updated desired temperature to {desired_humidity}°C: {response.success}")
-
 
 def set_presence(presence):
     with grpc.insecure_channel('localhost:50051') as channel:
