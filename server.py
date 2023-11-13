@@ -47,9 +47,10 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
                 with grpc.insecure_channel('localhost:50054') as channel:
                     stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
                     state = True if value == "ON" else False
-                    obj_res = stub.SetHumidity(smart_home_pb2.HumidityRequest(humidity=state))
+                    obj_res = stub.SetStateIrrigator(smart_home_pb2.IrrigatorRequest(state=state))
                     response.append(smart_home_pb2.ObjectValue(type="status", value=value))
             except Exception as e:
+                print(e)
                 response.append(smart_home_pb2.ObjectValue(type="error", value=""))
         else:
             response.append(smart_home_pb2.ObjectValue(type="error", value="Objeto não existe"))
@@ -61,18 +62,31 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
         response = []
 
         if actuator_type == smart_home_pb2.LAMP:
-            random_value = random.randint(0, 1)
-            value = "ON"
-            if random_value == 0: value = "OFF"
-            response.append(smart_home_pb2.ObjectValue(type="status", value=value))
+            try:
+                with grpc.insecure_channel('localhost:50053') as channel:
+                    stub = smart_home_pb2_grpc.LampServiceStub(channel)
+                    obj_res = stub.GetState(smart_home_pb2.Empty())
+                    state = "ON" if obj_res.success == True else "OFF"
+                    response.append(smart_home_pb2.ObjectValue(type="status", value=state))
+            except Exception as e:
+                response.append(smart_home_pb2.ObjectValue(type="error", value=""))
         elif actuator_type == smart_home_pb2.THERMOSTAT:
-            random_value = random.randrange(10, 30)
-            response.append(smart_home_pb2.ObjectValue(type="temperature", value=f"{random_value}"))
+            try:
+                with grpc.insecure_channel('localhost:50052') as channel:
+                    stub = smart_home_pb2_grpc.ThermostatServiceStub(channel)
+                    obj_res = stub.GetTemperature(smart_home_pb2.Empty())
+                    response.append(smart_home_pb2.ObjectValue(type="temperature", value=f"{obj_res.success}"))
+            except Exception as e:
+                response.append(smart_home_pb2.ObjectValue(type="error", value=""))
         elif actuator_type == smart_home_pb2.IRRIGATOR:
-            random_value = random.randint(0, 1)
-            value = "ON"
-            if random_value == 0: value = "OFF"
-            response.append(smart_home_pb2.ObjectValue(type="status",  value=value))
+            try:
+                with grpc.insecure_channel('localhost:50054') as channel:
+                    stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
+                    obj_res = stub.GetStateIrrigator(smart_home_pb2.Empty())
+                    state = "ON" if obj_res.success == True else "OFF"
+                    response.append(smart_home_pb2.ObjectValue(type="status", value=state))
+            except Exception as e:
+                response.append(smart_home_pb2.ObjectValue(type="error", value=""))
         else:
             response.append(smart_home_pb2.ObjectValue(type="error", value="Objeto não existe"))
         

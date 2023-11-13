@@ -33,6 +33,19 @@ message TemperatureResponse {
   bool success = 1;
 }
 
+service IrrigatorService {
+  rpc SetStateIrrigator(IrrigatorRequest) returns (IrrigatorResponse) {}
+  rpc GetStateIrrigator(Empty) returns (IrrigatorResponse) {}
+}
+
+message IrrigatorRequest {
+  bool state = 1;
+}
+
+message IrrigatorResponse {
+  bool success = 1;
+}
+
 // Service and messages to client interaction
 service ClientService {
   rpc SetActuatorValues(ActuatorRequest) returns (ObjectResponse);
@@ -68,17 +81,4 @@ enum SensorType {
   PRESENCE = 0;
   TEMPERATURE = 1;
   HUMIDITY = 2;
-}
-
-service IrrigatorService {
-  rpc SetStateIrrigator(IrrigatorRequest) returns (IrrigatorResponse) {}
-  rpc GetStateIrrigator(Empty) returns (IrrigatorResponse) {}
-}
-
-message IrrigatorRequest {
-  bool state = 1;
-}
-
-message IrrigatorResponse {
-  bool success = 1;
 }

@@ -17,7 +17,7 @@ class LampService(smart_home_pb2_grpc.LampServiceServicer):
     
     def GetState(self, request, context):
         global lamp_state
-        return smart_home_pb2.IrrigatorResponse(state=lamp_state, success=True)
+        return smart_home_pb2.LampResponse(success=lamp_state)
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

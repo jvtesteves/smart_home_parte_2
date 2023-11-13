@@ -13,7 +13,7 @@ class IrrigatorService(smart_home_pb2_grpc.IrrigatorServiceServicer):
 
     def SetStateIrrigator(self, request, context):
         global desired_humidity
-        current_humidity = request.humidity
+        current_humidity = request.state
         global irrigator_state
         irrigator_state = request.state
         if (current_humidity >= desired_humidity):
@@ -24,7 +24,7 @@ class IrrigatorService(smart_home_pb2_grpc.IrrigatorServiceServicer):
 
     def GetStateIrrigator(self, request, context):
         global irrigator_state
-        return smart_home_pb2.IrrigatorResponse(state=irrigator_state, success=True)
+        return smart_home_pb2.IrrigatorResponse(success=irrigator_state)
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
