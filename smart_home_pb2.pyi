@@ -52,6 +52,24 @@ class TemperatureResponse(_message.Message):
     success: bool
     def __init__(self, success: bool = ...) -> None: ...
 
+class TemperaturaResponseNumber(_message.Message):
+    __slots__ = ["temperature"]
+    TEMPERATURE_FIELD_NUMBER: _ClassVar[int]
+    temperature: float
+    def __init__(self, temperature: _Optional[float] = ...) -> None: ...
+
+class IrrigatorRequest(_message.Message):
+    __slots__ = ["state"]
+    STATE_FIELD_NUMBER: _ClassVar[int]
+    state: bool
+    def __init__(self, state: bool = ...) -> None: ...
+
+class IrrigatorResponse(_message.Message):
+    __slots__ = ["success"]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    def __init__(self, success: bool = ...) -> None: ...
+
 class ActuatorRequest(_message.Message):
     __slots__ = ["type", "value"]
     TYPE_FIELD_NUMBER: _ClassVar[int]
@@ -79,15 +97,3 @@ class ObjectResponse(_message.Message):
     VALUES_FIELD_NUMBER: _ClassVar[int]
     values: _containers.RepeatedCompositeFieldContainer[ObjectValue]
     def __init__(self, values: _Optional[_Iterable[_Union[ObjectValue, _Mapping]]] = ...) -> None: ...
-
-class IrrigatorRequest(_message.Message):
-    __slots__ = ["state"]
-    STATE_FIELD_NUMBER: _ClassVar[int]
-    state: bool
-    def __init__(self, state: bool = ...) -> None: ...
-
-class IrrigatorResponse(_message.Message):
-    __slots__ = ["success"]
-    SUCCESS_FIELD_NUMBER: _ClassVar[int]
-    success: bool
-    def __init__(self, success: bool = ...) -> None: ...

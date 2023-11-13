@@ -22,7 +22,7 @@ message LampResponse {
 service ThermostatService {
   rpc SetTemperature(TemperatureRequest) returns (TemperatureResponse) {}
   rpc UpdateDesiredTemperature(TemperatureRequest) returns (TemperatureResponse) {}
-  rpc GetTemperature(Empty) returns (TemperatureResponse) {}
+  rpc GetTemperature(Empty) returns (TemperaturaResponseNumber) {}
 }
 
 message TemperatureRequest {
@@ -31,6 +31,10 @@ message TemperatureRequest {
 
 message TemperatureResponse {
   bool success = 1;
+}
+
+message TemperaturaResponseNumber {
+  float temperature = 1; 
 }
 
 service IrrigatorService {

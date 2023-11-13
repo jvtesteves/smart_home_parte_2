@@ -121,7 +121,7 @@ class ThermostatServiceStub(object):
         self.GetTemperature = channel.unary_unary(
                 '/smart_home.ThermostatService/GetTemperature',
                 request_serializer=smart__home__pb2.Empty.SerializeToString,
-                response_deserializer=smart__home__pb2.TemperatureResponse.FromString,
+                response_deserializer=smart__home__pb2.TemperaturaResponseNumber.FromString,
                 )
 
 
@@ -162,7 +162,7 @@ def add_ThermostatServiceServicer_to_server(servicer, server):
             'GetTemperature': grpc.unary_unary_rpc_method_handler(
                     servicer.GetTemperature,
                     request_deserializer=smart__home__pb2.Empty.FromString,
-                    response_serializer=smart__home__pb2.TemperatureResponse.SerializeToString,
+                    response_serializer=smart__home__pb2.TemperaturaResponseNumber.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -221,7 +221,101 @@ class ThermostatService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/smart_home.ThermostatService/GetTemperature',
             smart__home__pb2.Empty.SerializeToString,
-            smart__home__pb2.TemperatureResponse.FromString,
+            smart__home__pb2.TemperaturaResponseNumber.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+
+class IrrigatorServiceStub(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def __init__(self, channel):
+        """Constructor.
+
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.SetStateIrrigator = channel.unary_unary(
+                '/smart_home.IrrigatorService/SetStateIrrigator',
+                request_serializer=smart__home__pb2.IrrigatorRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.IrrigatorResponse.FromString,
+                )
+        self.GetStateIrrigator = channel.unary_unary(
+                '/smart_home.IrrigatorService/GetStateIrrigator',
+                request_serializer=smart__home__pb2.Empty.SerializeToString,
+                response_deserializer=smart__home__pb2.IrrigatorResponse.FromString,
+                )
+
+
+class IrrigatorServiceServicer(object):
+    """Missing associated documentation comment in .proto file."""
+
+    def SetStateIrrigator(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetStateIrrigator(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+
+def add_IrrigatorServiceServicer_to_server(servicer, server):
+    rpc_method_handlers = {
+            'SetStateIrrigator': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetStateIrrigator,
+                    request_deserializer=smart__home__pb2.IrrigatorRequest.FromString,
+                    response_serializer=smart__home__pb2.IrrigatorResponse.SerializeToString,
+            ),
+            'GetStateIrrigator': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetStateIrrigator,
+                    request_deserializer=smart__home__pb2.Empty.FromString,
+                    response_serializer=smart__home__pb2.IrrigatorResponse.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'smart_home.IrrigatorService', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class IrrigatorService(object):
+    """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def SetStateIrrigator(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/SetStateIrrigator',
+            smart__home__pb2.IrrigatorRequest.SerializeToString,
+            smart__home__pb2.IrrigatorResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetStateIrrigator(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/GetStateIrrigator',
+            smart__home__pb2.Empty.SerializeToString,
+            smart__home__pb2.IrrigatorResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -352,99 +446,5 @@ class ClientService(object):
         return grpc.experimental.unary_stream(request, target, '/smart_home.ClientService/GetSensorValues',
             smart__home__pb2.SensorRequest.SerializeToString,
             smart__home__pb2.ObjectResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-
-class IrrigatorServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
-
-    def __init__(self, channel):
-        """Constructor.
-
-        Args:
-            channel: A grpc.Channel.
-        """
-        self.SetStateIrrigator = channel.unary_unary(
-                '/smart_home.IrrigatorService/SetStateIrrigator',
-                request_serializer=smart__home__pb2.IrrigatorRequest.SerializeToString,
-                response_deserializer=smart__home__pb2.IrrigatorResponse.FromString,
-                )
-        self.GetStateIrrigator = channel.unary_unary(
-                '/smart_home.IrrigatorService/GetStateIrrigator',
-                request_serializer=smart__home__pb2.Empty.SerializeToString,
-                response_deserializer=smart__home__pb2.IrrigatorResponse.FromString,
-                )
-
-
-class IrrigatorServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
-
-    def SetStateIrrigator(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetStateIrrigator(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-
-def add_IrrigatorServiceServicer_to_server(servicer, server):
-    rpc_method_handlers = {
-            'SetStateIrrigator': grpc.unary_unary_rpc_method_handler(
-                    servicer.SetStateIrrigator,
-                    request_deserializer=smart__home__pb2.IrrigatorRequest.FromString,
-                    response_serializer=smart__home__pb2.IrrigatorResponse.SerializeToString,
-            ),
-            'GetStateIrrigator': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetStateIrrigator,
-                    request_deserializer=smart__home__pb2.Empty.FromString,
-                    response_serializer=smart__home__pb2.IrrigatorResponse.SerializeToString,
-            ),
-    }
-    generic_handler = grpc.method_handlers_generic_handler(
-            'smart_home.IrrigatorService', rpc_method_handlers)
-    server.add_generic_rpc_handlers((generic_handler,))
-
-
- # This class is part of an EXPERIMENTAL API.
-class IrrigatorService(object):
-    """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def SetStateIrrigator(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/SetStateIrrigator',
-            smart__home__pb2.IrrigatorRequest.SerializeToString,
-            smart__home__pb2.IrrigatorResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def GetStateIrrigator(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/GetStateIrrigator',
-            smart__home__pb2.Empty.SerializeToString,
-            smart__home__pb2.IrrigatorResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

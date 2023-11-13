@@ -75,7 +75,7 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
                 with grpc.insecure_channel('localhost:50052') as channel:
                     stub = smart_home_pb2_grpc.ThermostatServiceStub(channel)
                     obj_res = stub.GetTemperature(smart_home_pb2.Empty())
-                    response.append(smart_home_pb2.ObjectValue(type="temperature", value=f"{obj_res.success}"))
+                    response.append(smart_home_pb2.ObjectValue(type="temperature", value=f"{obj_res.temperature}"))
             except Exception as e:
                 response.append(smart_home_pb2.ObjectValue(type="error", value=""))
         elif actuator_type == smart_home_pb2.IRRIGATOR:

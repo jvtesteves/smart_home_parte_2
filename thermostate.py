@@ -30,7 +30,7 @@ class ThermostatService(smart_home_pb2_grpc.ThermostatServiceServicer):
     
     def GetTemperature(self, request, context):
         global desired_temperature
-        return smart_home_pb2.IrrigatorResponse(state=desired_temperature, success=True)
+        return smart_home_pb2.TemperaturaResponseNumber(temperature=desired_temperature)
 
 
 
