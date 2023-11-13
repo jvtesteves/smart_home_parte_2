@@ -91,6 +91,90 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
     def GetSensorValues(self, request, context):
         sensor_type = request.type
 
+        while context.is_active():
+            response = []
+            
+            method_frame, header_frame, body = channel.basic_get(queue='sensor_data_presence', auto_ack=True)
+            if method_frame:
+                message = json.loads(body)
+                if message['sensor_type'] == 'presence':
+                    value = "ON" if message['value'] == 1 else "OFF"
+                    response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="PRESENCE", value=value)])
+                    yield response
+            
+            method_frame, header_frame, body = channel.basic_get(queue='sensor_data_temperature', auto_ack=True)
+            if method_frame:
+                message = json.loads(body)
+                print(message)
+                if message['sensor_type'] == 'temperature':
+                    value = f"{message['value']}"
+                    print("Sensor Temp:", message)
+                    response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="TEMPERATURE", value=value)])
+                    yield response
+            
+            method_frame, header_frame, body = channel.basic_get(queue='sensor_data_humidity', auto_ack=True)
+            if method_frame:
+                message = json.loads(body)
+                print("Sensor Humidty:", message)
+                if message['sensor_type'] == 'humidity':
+                    value = f"{message['value']}"
+                    response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="HUMIDITY", value=value)])
+                    yield response
+                        
+        '''if sensor_type == smart_home_pb2.PRESENCE:
+            while context.is_active():
+                response = []
+                
+                method_frame, header_frame, body = channel.basic_get(queue='sensor_data_presence', auto_ack=True)
+                if method_frame:
+                    message = json.loads(body)
+                    if message['sensor_type'] == 'presence':
+                        value = "ON" if message['value'] == 1 else "OFF"
+                        response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="PRESENCE", value=value)])
+                        yield response
+                
+                method_frame, header_frame, body = channel.basic_get(queue='sensor_data_temperature', auto_ack=True)
+                if method_frame:
+                    message = json.loads(body)
+                    print(message)
+                    if message['sensor_type'] == 'temperature':
+                        value = f"{message['value']}"
+                        print("Sensor Temp:", message)
+                        response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="TEMPERATURE", value=value)])
+                        yield response
+        elif sensor_type == smart_home_pb2.TEMPERATURE:
+            while context.is_active():
+                response = []
+                
+                method_frame, header_frame, body = channel.basic_get(queue='sensor_data_temperature', auto_ack=True)
+                if method_frame:
+                    message = json.loads(body)
+                    print(message)
+                    if message['sensor_type'] == 'temperature':
+                        value = f"{message['value']}"
+                        print("Sensor Temp:", message)
+                        response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="temperature", value=value)])
+                        yield response
+        elif sensor_type == smart_home_pb2.HUMIDITY:
+            while context.is_active():
+                response = []
+                
+                method_frame, header_frame, body = channel.basic_get(queue='sensor_data_humidity', auto_ack=True)
+                if method_frame:
+                    message = json.loads(body)
+                    print("Sensor Humidty:", message)
+                    if message['sensor_type'] == 'humidity':
+                        value = f"{message['value']}"
+                        response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="humidity", value=value)])
+                        yield response
+        else:
+            response = []
+            response.append(smart_home_pb2.ObjectValue(type="error", value="Object does not exist"))
+            context.abort(grpc.StatusCode.NOT_FOUND, "Sensor not recognized", smart_home_pb2.ObjectResponse(values=response))
+
+    def GetSensorValues2(self, request, context):
+        sensor_type = request.type
+
         if sensor_type == smart_home_pb2.PRESENCE:
             while context.is_active():
                 response = []
@@ -130,7 +214,7 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
         else:
             response = []
             response.append(smart_home_pb2.ObjectValue(type="error", value="Object does not exist"))
-            context.abort(grpc.StatusCode.NOT_FOUND, "Sensor not recognized", smart_home_pb2.ObjectResponse(values=response))
+            context.abort(grpc.StatusCode.NOT_FOUND, "Sensor not recognized", smart_home_pb2.ObjectResponse(values=response))'''
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

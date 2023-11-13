@@ -38,12 +38,12 @@ message TemperaturaResponseNumber {
 }
 
 service IrrigatorService {
-  rpc SetHumityIrrigator(IrrigatorRequest) returns (IrrigatorResponse) {}
+  rpc SetHumityIrrigator(HumidityRequest) returns (IrrigatorResponse) {}
   rpc SetStateIrrigator(IrrigatorRequest) returns (IrrigatorResponse) {}
   rpc GetStateIrrigator(Empty) returns (IrrigatorResponse) {}
 }
 
-message humidityRequest {
+message HumidityRequest {
   float humidity = 1;
 }
 
@@ -60,6 +60,7 @@ service ClientService {
   rpc SetActuatorValues(ActuatorRequest) returns (ObjectResponse);
   rpc GetActuatorValues(ActuatorRequest) returns (ObjectResponse);
   rpc GetSensorValues(SensorRequest) returns (stream ObjectResponse);
+  rpc GetSensorValues2(SensorRequest) returns (stream ObjectResponse);
 }
 
 message ActuatorRequest {

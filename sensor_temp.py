@@ -21,10 +21,13 @@ channel.queue_declare(queue=temperature_queue_name)
 
 
 def get_desired_temperature():
-    with grpc.insecure_channel('localhost:50052') as channel:
-        stub = smart_home_pb2_grpc.ThermostatServiceStub(channel)
-        response = stub.GetTemperature(smart_home_pb2.Empty())
-        return response.temperature
+    try:
+        with grpc.insecure_channel('localhost:50052') as channel:
+            stub = smart_home_pb2_grpc.ThermostatServiceStub(channel)
+            response = stub.GetTemperature(smart_home_pb2.Empty())
+            return response.temperature
+    except Exception as e:
+        print(e)
 
 
 def publish_sensor_data():

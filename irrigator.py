@@ -18,7 +18,7 @@ class IrrigatorService(smart_home_pb2_grpc.IrrigatorServiceServicer):
             irrigator_state = False
             print(f"Current humidity is {current_humidity}%. The value of the irrigator is set to {irrigator_state}")
         else:
-            rrigator_state = True
+            irrigator_state = True
             print(f"Current humidity is {current_humidity}%. The value of the irrigator is set to {irrigator_state}")
         return smart_home_pb2.IrrigatorResponse(success=True)
 
