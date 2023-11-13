@@ -28,6 +28,8 @@ class ThermostatService(smart_home_pb2_grpc.ThermostatServiceServicer):
             print(f"Current temperature is {current_temperature}°C, no adjustment needed.")
         return smart_home_pb2.TemperatureResponse(success=True)
 
+
+
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     smart_home_pb2_grpc.add_ThermostatServiceServicer_to_server(ThermostatService(), server)

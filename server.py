@@ -4,6 +4,20 @@ import smart_home_pb2
 import smart_home_pb2_grpc
 import time
 import random
+import pika
+import json
+
+# RabbitMQ
+# Configurações do RabbitMQ
+rabbitmq_host = 'localhost'
+queue_name = 'sensor_data'
+
+# Conexão com o RabbitMQ
+connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
+channel = connection.channel()
+
+# Declarar a fila para consumo
+channel.queue_declare(queue=queue_name)
 
 class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
     def SetActuatorValues(self, request, context):
@@ -12,17 +26,31 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
         response = []
 
         if actuator_type == smart_home_pb2.LAMP:
-            print("Setting lamp value:", value)
-            response.append(smart_home_pb2.ObjectValue(type="status", value=value))
-            # Lógica para mudar valor da lâmpada
+            try:
+                with grpc.insecure_channel('localhost:50053') as channel:
+                    stub = smart_home_pb2_grpc.LampServiceStub(channel)
+                    state = True if value == "ON" else False
+                    obj_res = stub.SetState(smart_home_pb2.LampRequest(state=state))
+                    response.append(smart_home_pb2.ObjectValue(type="status", value=value))
+            except Exception as e:
+                response.append(smart_home_pb2.ObjectValue(type="error", value=""))
         elif actuator_type == smart_home_pb2.THERMOSTAT:
-            print("Setting thermostat value:", value)
-            response.append(smart_home_pb2.ObjectValue(type="temperature", value=value))
-            # Lógica para mudar valor do termostato
+            try:
+                with grpc.insecure_channel('localhost:50052') as channel:
+                    stub = smart_home_pb2_grpc.ThermostatServiceStub(channel)
+                    obj_res = stub.UpdateDesiredTemperature(smart_home_pb2.TemperatureRequest(temperature=float(value)))
+                    response.append(smart_home_pb2.ObjectValue(type="temperature", value=value))
+            except Exception as e:
+                response.append(smart_home_pb2.ObjectValue(type="error", value=""))          
         elif actuator_type == smart_home_pb2.IRRIGATOR:
-            print("Setting irrigator value:", value)
-            response.append(smart_home_pb2.ObjectValue(type="status", value=value))
-            # Lógica para mudar valor da irrigador
+            try:
+                with grpc.insecure_channel('localhost:50054') as channel:
+                    stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
+                    state = True if value == "ON" else False
+                    obj_res = stub.SetHumidity(smart_home_pb2.HumidityRequest(humidity=state))
+                    response.append(smart_home_pb2.ObjectValue(type="status", value=value))
+            except Exception as e:
+                response.append(smart_home_pb2.ObjectValue(type="error", value=""))
         else:
             response.append(smart_home_pb2.ObjectValue(type="error", value="Objeto não existe"))
 
@@ -56,14 +84,15 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
         if sensor_type == smart_home_pb2.PRESENCE:
             while context.is_active():
                 response = []
-                # Simulação contínua de leituras de presença
-                random_value = random.randint(0, 1)
-                value = "ON"
-                if random_value == 0: value = "OFF"
                 
-                response.append(smart_home_pb2.ObjectValue(type="status", value=value))
-                yield smart_home_pb2.ObjectResponse(values=response)
-                time.sleep(5)
+                method_frame, header_frame, body = channel.basic_get(queue=queue_name, auto_ack=True)
+                if method_frame:
+                    message = json.loads(body)
+                    print(message)
+                    if message['sensor_type'] == 'presence':
+                        value = "ON" if message['value'] == 1 else "OFF"
+                        response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="status", value=value)])
+                        yield response
 
         elif sensor_type == smart_home_pb2.TEMPERATURE:
             while context.is_active():
@@ -90,7 +119,7 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
             response = []
             response.append(smart_home_pb2.ObjectValue(type="error", value="Object does not exist"))
             context.abort(grpc.StatusCode.NOT_FOUND, "Sensor not recognized", smart_home_pb2.ObjectResponse(values=response))
-            
+
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     smart_home_pb2_grpc.add_ClientServiceServicer_to_server(ClientService(), server)
