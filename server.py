@@ -99,7 +99,7 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
             while context.is_active():
                 response = []
                 
-                method_frame, header_frame, body = channel.basic_get(queue=queue_name, auto_ack=True)
+                method_frame, header_frame, body = channel.basic_get(queue='sensor_data_presence', auto_ack=True)
                 if method_frame:
                     message = json.loads(body)
                     print(message)

@@ -1,42 +1,42 @@
 import pika
 import json
 import time
-from random import uniform
+from random import randint
 
 # Configurações do RabbitMQ
-rabbitmq_host = 'localhost'  # ou o IP/host onde seu RabbitMQ está rodando
+rabbitmq_host = 'localhost'
 queue_name = 'sensor_data'
+presence_queue_name = 'sensor_data_presence'  # Nova fila para presença
 
 # Estabelece conexão com o RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=rabbitmq_host))
 channel = connection.channel()
 
-# Declara a fila onde as mensagens serão publicadas
+# Declara as filas onde as mensagens serão publicadas
 channel.queue_declare(queue=queue_name)
+channel.queue_declare(queue=presence_queue_name)  # Declaração da nova fila
 
-#state
-last = 0
+last_state = None
 
-def publish_sensor_presence():
-    global last
 
+def publish_sensor_data():
+    global last_state
     while True:
-        # Simula a leitura do sensor de temperatura
-        presence = round(uniform(0, 1), 0)
-        
-        if(presence != last):
+        # Simula a detecção de presença (0 ou 1)
+        presence = randint(0, 1)
+        if presence != last_state:
+            last_state = presence
             message = json.dumps({'sensor_type': 'presence', 'value': presence})
 
-            # Publica a mensagem na fila
+            # Publica a mensagem nas filas
             channel.basic_publish(exchange='',
-                                routing_key=queue_name,
-                                body=message)
+                                  routing_key=queue_name,
+                                  body=message)
+            channel.basic_publish(exchange='',
+                                  routing_key=presence_queue_name,
+                                  body=message)
             print(f"[x] Sent {message}")
-            time.sleep(5)  # Intervalo entre as publicações
-
-
-        last = presence
         time.sleep(5)  # Intervalo entre as publicações
 
-publish_sensor_presence()
 
+publish_sensor_data()

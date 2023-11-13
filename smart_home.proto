@@ -1,4 +1,4 @@
-// Arquivo: thermostat.proto
+// Arquivo: smart_home.proto
 
 syntax = "proto3";
 
