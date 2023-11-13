@@ -24,6 +24,10 @@ PRESENCE: SensorType
 TEMPERATURE: SensorType
 HUMIDITY: SensorType
 
+class Empty(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
+
 class LampRequest(_message.Message):
     __slots__ = ["state"]
     STATE_FIELD_NUMBER: _ClassVar[int]
@@ -76,13 +80,13 @@ class ObjectResponse(_message.Message):
     values: _containers.RepeatedCompositeFieldContainer[ObjectValue]
     def __init__(self, values: _Optional[_Iterable[_Union[ObjectValue, _Mapping]]] = ...) -> None: ...
 
-class HumidityRequest(_message.Message):
-    __slots__ = ["humidity"]
-    HUMIDITY_FIELD_NUMBER: _ClassVar[int]
-    humidity: float
-    def __init__(self, humidity: _Optional[float] = ...) -> None: ...
+class IrrigatorRequest(_message.Message):
+    __slots__ = ["state"]
+    STATE_FIELD_NUMBER: _ClassVar[int]
+    state: bool
+    def __init__(self, state: bool = ...) -> None: ...
 
-class HumidityResponse(_message.Message):
+class IrrigatorResponse(_message.Message):
     __slots__ = ["success"]
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     success: bool

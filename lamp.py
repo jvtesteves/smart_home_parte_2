@@ -14,6 +14,10 @@ class LampService(smart_home_pb2_grpc.LampServiceServicer):
         lamp_state = request.state
         print(f"The value of the lamp is set to {lamp_state}")
         return smart_home_pb2.LampResponse(success=True)
+    
+    def GetState(self, request, context):
+        global lamp_state
+        return smart_home_pb2.IrrigatorResponse(state=lamp_state, success=True)
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
