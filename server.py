@@ -98,7 +98,6 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
                 method_frame, header_frame, body = channel.basic_get(queue='sensor_data_presence', auto_ack=True)
                 if method_frame:
                     message = json.loads(body)
-                    print(message)
                     if message['sensor_type'] == 'presence':
                         value = "ON" if message['value'] == 1 else "OFF"
                         response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="status", value=value)])
@@ -111,8 +110,9 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
                 if method_frame:
                     message = json.loads(body)
                     print(message)
-                    if message['sensor_type'] == 'presence':
+                    if message['sensor_type'] == 'temperature':
                         value = f"{message['value']}"
+                        print("Sensor Temp:", message)
                         response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="temperature", value=value)])
                         yield response
         elif sensor_type == smart_home_pb2.HUMIDITY:
@@ -122,10 +122,10 @@ class ClientService(smart_home_pb2_grpc.ClientServiceServicer):
                 method_frame, header_frame, body = channel.basic_get(queue='sensor_data_humidity', auto_ack=True)
                 if method_frame:
                     message = json.loads(body)
-                    print(message)
-                    if message['sensor_type'] == 'presence':
+                    print("Sensor Humidty:", message)
+                    if message['sensor_type'] == 'humidity':
                         value = f"{message['value']}"
-                        response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="temperature", value=value)])
+                        response = smart_home_pb2.ObjectResponse(values=[smart_home_pb2.ObjectValue(type="humidity", value=value)])
                         yield response
         else:
             response = []

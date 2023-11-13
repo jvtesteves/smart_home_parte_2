@@ -20,7 +20,7 @@ channel.queue_declare(queue=temperature_queue_name)  # Declaração da nova fila
 def publish_sensor_data():
     while True:
         # Simula a leitura do sensor de temperatura
-        temperature = round(uniform(18.0, 26.0), 0)
+        temperature = round(uniform(28.0, 30.0), 0)
         message = json.dumps({'sensor_type': 'temperature', 'value': temperature})
 
         # Publica a mensagem nas filas

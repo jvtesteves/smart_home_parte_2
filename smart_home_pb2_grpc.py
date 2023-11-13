@@ -235,6 +235,11 @@ class IrrigatorServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.SetHumityIrrigator = channel.unary_unary(
+                '/smart_home.IrrigatorService/SetHumityIrrigator',
+                request_serializer=smart__home__pb2.IrrigatorRequest.SerializeToString,
+                response_deserializer=smart__home__pb2.IrrigatorResponse.FromString,
+                )
         self.SetStateIrrigator = channel.unary_unary(
                 '/smart_home.IrrigatorService/SetStateIrrigator',
                 request_serializer=smart__home__pb2.IrrigatorRequest.SerializeToString,
@@ -249,6 +254,12 @@ class IrrigatorServiceStub(object):
 
 class IrrigatorServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
+
+    def SetHumityIrrigator(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def SetStateIrrigator(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -265,6 +276,11 @@ class IrrigatorServiceServicer(object):
 
 def add_IrrigatorServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'SetHumityIrrigator': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetHumityIrrigator,
+                    request_deserializer=smart__home__pb2.IrrigatorRequest.FromString,
+                    response_serializer=smart__home__pb2.IrrigatorResponse.SerializeToString,
+            ),
             'SetStateIrrigator': grpc.unary_unary_rpc_method_handler(
                     servicer.SetStateIrrigator,
                     request_deserializer=smart__home__pb2.IrrigatorRequest.FromString,
@@ -284,6 +300,23 @@ def add_IrrigatorServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class IrrigatorService(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def SetHumityIrrigator(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/smart_home.IrrigatorService/SetHumityIrrigator',
+            smart__home__pb2.IrrigatorRequest.SerializeToString,
+            smart__home__pb2.IrrigatorResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def SetStateIrrigator(request,

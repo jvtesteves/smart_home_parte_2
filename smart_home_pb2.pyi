@@ -58,6 +58,12 @@ class TemperaturaResponseNumber(_message.Message):
     temperature: float
     def __init__(self, temperature: _Optional[float] = ...) -> None: ...
 
+class humidityRequest(_message.Message):
+    __slots__ = ["humidity"]
+    HUMIDITY_FIELD_NUMBER: _ClassVar[int]
+    humidity: float
+    def __init__(self, humidity: _Optional[float] = ...) -> None: ...
+
 class IrrigatorRequest(_message.Message):
     __slots__ = ["state"]
     STATE_FIELD_NUMBER: _ClassVar[int]

@@ -38,8 +38,13 @@ message TemperaturaResponseNumber {
 }
 
 service IrrigatorService {
+  rpc SetHumityIrrigator(IrrigatorRequest) returns (IrrigatorResponse) {}
   rpc SetStateIrrigator(IrrigatorRequest) returns (IrrigatorResponse) {}
   rpc GetStateIrrigator(Empty) returns (IrrigatorResponse) {}
+}
+
+message humidityRequest {
+  float humidity = 1;
 }
 
 message IrrigatorRequest {

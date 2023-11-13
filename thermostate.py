@@ -33,7 +33,6 @@ class ThermostatService(smart_home_pb2_grpc.ThermostatServiceServicer):
         return smart_home_pb2.TemperaturaResponseNumber(temperature=desired_temperature)
 
 
-
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     smart_home_pb2_grpc.add_ThermostatServiceServicer_to_server(ThermostatService(), server)

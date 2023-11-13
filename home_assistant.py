@@ -44,7 +44,7 @@ def set_humidity(current_humidity):
         with grpc.insecure_channel('localhost:50054') as channel:
             stub = smart_home_pb2_grpc.IrrigatorServiceStub(channel)
             # Aqui o Home Assistant envia a temperatura atual do sensor para o termostato
-            response = stub.SetHumidity(smart_home_pb2.HumidityRequest(humidity=current_humidity))
+            response = stub.SetHumityIrrigator(smart_home_pb2.HumidityRequest(humidity=current_humidity))
             print(f"Irrigator response: {response.success}")
     except Exception as e:
         print(f"{e}")
