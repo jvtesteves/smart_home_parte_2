@@ -7,19 +7,23 @@ python -m grpc_tools.protoc -I. --python_out=. --pyi_out=. --grpc_python_out=. .
 
 Este projeto simula um ambiente de casa inteligente, integrando sensores e atuadores através de RabbitMQ e gRPC, utilizando Python.
 
-## Funcionalidades Iniciais
+## Funcionalidades
 
-- **Sensores**: Simulação de sensores de temperatura que publicam leituras periodicamente para uma fila RabbitMQ.
-- **Home Assistant**: Um consumidor de mensagens RabbitMQ que processa leituras de sensores e toma decisões de controle.
-- **Servidor gRPC**: Um servidor que expõe serviços para controlar um termostato virtual e responder a requisições de atualização de temperatura.
-- **Comunicação**: Utilização de RabbitMQ para comunicação assíncrona entre sensores e o Home Assistant, e gRPC para comandos de atuadores.
+- **Sensores**: Simulação de sensores de temperatura, umidade e presença, que publicam leituras periodicamente para filas específicas no RabbitMQ.
+- **Atuadores**: Implementação de atuadores como lâmpada, termostato e irrigador, controlados via gRPC.
+- **Home Assistant**: Um serviço que consome mensagens RabbitMQ dos sensores e interage com atuadores via gRPC.
+- **Servidor gRPC**: Um servidor que expõe serviços para controlar os atuadores e responder a requisições de atualização.
+- **Comunicação**: Utilização de RabbitMQ para comunicação assíncrona entre sensores e o Home Assistant, e gRPC para comandos dos atuadores.
+- **Cliente JavaScript**: Uma interface de usuário web para interagir com os atuadores e visualizar dados dos sensores.
 
 ## Pré-requisitos
 
-Antes de iniciar, certifique-se de que você tem o Python 3.x instalado, juntamente com o RabbitMQ e as seguintes bibliotecas Python:
-- `pika`
-- `grpcio`
-- `grpcio-tools`
+Antes de iniciar, certifique-se de ter instalado:
+- Python 3.x
+- RabbitMQ
+- Node.js
+- Bibliotecas Python: `pika`, `grpcio`, `grpcio-tools`
+- Dependências Node.js (consulte `package.json` no repositório do cliente)
 
 ## Configuração do Ambiente
 
